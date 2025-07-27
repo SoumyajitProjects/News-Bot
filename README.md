@@ -1,71 +1,134 @@
-News Summarization & Fact-Checking Bot
-An AI-powered news analysis tool that summarizes articles and verifies their credibility using CrewAI, OpenAI, and FastAPI.
-Features
-🔍 News Article Scraping: Extract content from news URLs
-📄 AI-Powered Summarization: Generate concise summaries with key points
-✅ Fact-Checking: Verify claims and assess credibility
-🎯 Topic Search: Find articles by topic
-📊 Credibility Scoring: Rate news sources and content reliability
-🚀 FastAPI Backend: Modern, async API with automatic documentation
-🐳 Docker Support: Easy containerized deployment
-Tech Stack
-CrewAI: Multi-agent AI system for news analysis
-OpenAI: LLM for natural language processing
-FastAPI: Modern web framework for APIs
-News API: Real-time news data
-Serper API: Search functionality for fact-checking
-Docker: Containerization for easy deployment
-Quick Start
-Prerequisites
-Python 3.11+
-API Keys:
-OpenAI API Key
-News API Key (from newsapi.org)
-Serper API Key (from serper.dev)
-Installation
-Clone the repository:
+# 🧠 News Summarization & Fact-Checking Bot
+
+An AI-powered news analysis tool that summarizes articles and verifies their credibility using **CrewAI**, **OpenAI**, and **FastAPI**.
+
+---
+
+## ✨ Features
+
+- 🔍 **News Article Scraping** – Extracts content from news URLs  
+- 📄 **AI-Powered Summarization** – Generates concise summaries with key points  
+- ✅ **Fact-Checking** – Verifies claims and assesses credibility  
+- 🎯 **Topic Search** – Find articles by topic or keyword  
+- 📊 **Credibility Scoring** – Rates news sources and content reliability  
+- 🚀 **FastAPI Backend** – Modern async API with automatic docs  
+- 🐳 **Docker Support** – Easy containerized deployment
+
+---
+
+## 🛠 Tech Stack
+
+| Technology     | Role                                      |
+|----------------|-------------------------------------------|
+| **CrewAI**     | Multi-agent system for news analysis      |
+| **OpenAI**     | LLM for NLP, summarization, fact-checking |
+| **FastAPI**    | Backend web framework                     |
+| **News API**   | Real-time news article sourcing           |
+| **Serper API** | Search functionality for fact-checking    |
+| **Docker**     | Containerization and deployment           |
+
+---
+
+## 🚀 Quick Start
+
+### ✅ Prerequisites
+
+- Python 3.11+
+- API Keys:
+  - `OPENAI_API_KEY`
+  - `NEWS_API_KEY` (from [newsapi.org](https://newsapi.org))
+  - `SERPER_API_KEY` (from [serper.dev](https://serper.dev))
+
+---
+
+### 🔧 Installation
+
+```bash
+# Clone the repository
 git clone https://github.com/SoumyajitProjects/New-Bot.git
 cd New-Bot
-Create a virtual environment:
+
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies:
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
-Set up environment variables:
+
+# Configure environment variables
 cp .env.example .env
-# Edit .env with your API keys
-Run the application:
+# Edit `.env` file and add your API keys
+```
+
+---
+
+### ▶️ Run the App
+
+```bash
 python main.py
-The API will be available at http://localhost:8000
-API Endpoints
-📚 Documentation
-Interactive Docs: http://localhost:8000/docs
-ReDoc: http://localhost:8000/redoc
-🔍 Main Endpoints
-#### Analyze Single Article
+```
+
+App will be available at: [http://localhost:8000](http://localhost:8000)
+
+---
+
+## 📚 API Documentation
+
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)  
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+## 🔍 API Endpoints
+
+### 📄 Analyze a Single Article
+
+```http
 POST /analyze/article
 Content-Type: application/json
+
 {
   "url": "https://example.com/news-article"
 }
-#### Batch Analyze Articles
+```
+
+### 📑 Batch Analyze Articles
+
+```http
 POST /analyze/batch
 Content-Type: application/json
-["https://example.com/article1", "https://example.com/article2"]
-#### Search News by Topic
+
+[
+  "https://example.com/article1",
+  "https://example.com/article2"
+]
+```
+
+### 🎯 Search News by Topic
+
+```http
 POST /search/topic
 Content-Type: application/json
+
 {
   "topic": "artificial intelligence",
   "limit": 5
 }
-#### Get Headlines by Category
+```
+
+### 📰 Get Headlines by Category
+
+```http
 GET /headlines/{category}?limit=10
-Categories: general, business, entertainment, health, science, sports, technology
-🏥 Health Check
-GET /health
-Response Format
-News Analysis Response
+```
+
+- Categories: `general`, `business`, `entertainment`, `health`, `science`, `sports`, `technology`
+
+---
+
+## ⚙️ Response Format
+
+```json
 {
   "article": {
     "title": "Article Title",
@@ -77,16 +140,16 @@ News Analysis Response
   },
   "summary": {
     "original_title": "Article Title",
-    "summary": "Concise summary of the article...",
-    "key_points": ["Key point 1", "Key point 2", "Key point 3"],
+    "summary": "Concise summary...",
+    "key_points": ["Point 1", "Point 2"],
     "sentiment": "neutral"
   },
   "fact_checks": [
     {
-      "claim": "Specific claim from article",
+      "claim": "Claim text",
       "verification_status": "verified",
-      "evidence": ["Supporting evidence 1", "Supporting evidence 2"],
       "confidence_score": 0.85,
+      "evidence": ["Evidence 1", "Evidence 2"],
       "sources": ["source1.com", "source2.com"]
     }
   ],
@@ -94,122 +157,118 @@ News Analysis Response
   "overall_assessment": "Detailed credibility assessment...",
   "processing_time": 12.34
 }
-Docker Deployment
-Using Docker Compose (Recommended)
-# Build and run
+```
+
+---
+
+## 🐳 Docker Deployment
+
+### 🔁 With Docker Compose (Recommended)
+
+```bash
 docker-compose up --build
-# Run in background
+# or run in background
 docker-compose up -d
-Using Docker directly
-# Build image
+```
+
+### 🐋 With Docker CLI
+
+```bash
 docker build -t news-bot .
-# Run container
 docker run -p 8000:8000 --env-file .env news-bot
-Configuration
-Environment Variables
-OPENAI_API_KEY=your_openai_api_key_here
-SERPER_API_KEY=your_serper_api_key_here
-NEWS_API_KEY=your_news_api_key_here
-API Configuration
-Host: 0.0.0.0 (configurable in config.py)
-Port: 8000 (configurable in config.py)
-OpenAI Model: gpt-3.5-turbo (configurable in config.py)
-Usage Examples
-Python Client Example
-import requests
-# Analyze a single article
-response = requests.post(
-    "http://localhost:8000/analyze/article",
-    json={"url": "https://example.com/news-article"}
-)
-analysis = response.json()
-print(f"Summary: {analysis['summary']['summary']}")
-print(f"Credibility Score: {analysis['credibility_score']}")
-# Search for articles
-response = requests.post(
-    "http://localhost:8000/search/topic",
-    json={"topic": "climate change", "limit": 3}
-)
-articles = response.json()
-print(f"Found {len(articles['articles'])} articles")
-cURL Examples
-# Analyze article
-curl -X POST "http://localhost:8000/analyze/article" \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://example.com/news-article"}'
-# Get headlines
-curl "http://localhost:8000/headlines/technology?limit=5"
-# Search by topic
-curl -X POST "http://localhost:8000/search/topic" \
-  -H "Content-Type: application/json" \
-  -d '{"topic": "artificial intelligence", "limit": 3}'
-Architecture
-Components
-FastAPI Application (main.py): REST API endpoints
-News Service (services/news_service.py): Core business logic
-News Scraper (utils/news_scraper.py): Web scraping utilities
-CrewAI Agents (crew/news_crew.py): AI agents for analysis
-Models (models.py): Pydantic data models
-AI Agents
-News Summarizer: Creates concise summaries with key points
-Fact Checker: Verifies claims and finds supporting evidence
-Credibility Analyst: Assesses source reliability and content quality
-Error Handling
-The API includes comprehensive error handling:
-400 Bad Request: Invalid input or scraping errors
-404 Not Found: Resource not found
-500 Internal Server Error: Server-side errors
-Validation Errors: Pydantic model validation
-Logging
-Structured logging is implemented throughout the application:
-Level: INFO (configurable)
-Format: Timestamp, logger name, level, message
-Output: Console (Docker logs in containerized deployment)
-Performance Considerations
-Async/Await: Non-blocking operations for better performance
-Concurrent Processing: Batch analysis uses asyncio for parallel processing
-Rate Limiting: Consider implementing rate limiting for production use
-Caching: Consider caching frequently accessed news articles
-Security
-CORS: Configured for cross-origin requests
-Input Validation: Pydantic models validate all inputs
-Error Handling: Prevents information leakage in error responses
-Non-root User: Docker container runs as non-root user
-Contributing
-Fork the repository
-Create a feature branch
-Make your changes
-Add tests if applicable
-Submit a pull request
-License
-This project is licensed under the MIT License.
-API Key Setup
-OpenAI API
-Visit OpenAI
-Create an account and get your API key
-Add to .env file
-News API
-Visit News API
-Sign up for a free account
-Get your API key
-Add to .env file
-Serper API
-Visit Serper
-Sign up for an account
-Get your API key
-Add to .env file
-Troubleshooting
-Common Issues
-API Key Errors: Ensure all API keys are properly set in .env
-Port Conflicts: Change port in config.py if 8000 is in use
-Dependencies: Run pip install -r requirements.txt to install all dependencies
-Docker Issues: Ensure Docker is running and ports are available
-Debug Mode
-Set logging level to DEBUG in main.py for detailed logs:
+```
+
+---
+
+## 🧱 Architecture Overview
+
+- `main.py`: FastAPI entrypoint
+- `services/news_service.py`: Core business logic
+- `utils/news_scraper.py`: Article scraping utilities
+- `crew/news_crew.py`: CrewAI agents
+- `models.py`: Pydantic data models
+
+### 🤖 AI Agent Roles
+
+| Agent              | Role                                       |
+|--------------------|--------------------------------------------|
+| **News Summarizer**| Generates concise summaries with key points|
+| **Fact Checker**   | Verifies article claims                    |
+| **Credibility Analyst** | Scores source reliability              |
+
+---
+
+## 🛡 Error Handling
+
+- `400`: Bad request / scraping failure
+- `404`: Resource not found
+- `500`: Internal server error
+- Validation: Input errors handled by Pydantic
+
+---
+
+## 📈 Logging & Performance
+
+- Log level: `INFO` (can be set to `DEBUG`)
+- Async FastAPI + asyncio for high throughput
+- Structured logs (timestamped, color-coded)
+- Batch article analysis is concurrent
+- Suggestions:
+  - Add rate limiting
+  - Cache frequently accessed results
+
+---
+
+## 🔐 Security
+
+- Input validation via Pydantic
+- CORS enabled
+- No sensitive data in error responses
+- Docker runs as non-root user
+
+---
+
+## 🧪 Contributing
+
+1. Fork this repo  
+2. Create a feature branch  
+3. Implement your changes  
+4. Add tests if needed  
+5. Submit a PR!
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 🧠 API Key Setup
+
+| Service     | Link                                |
+|-------------|-------------------------------------|
+| OpenAI      | [openai.com](https://openai.com)     |
+| News API    | [newsapi.org](https://newsapi.org)   |
+| Serper API  | [serper.dev](https://serper.dev)     |
+
+---
+
+## 🧰 Troubleshooting
+
+| Problem              | Solution                                     |
+|----------------------|----------------------------------------------|
+| API Key Error        | Double-check `.env` file                     |
+| Port Conflict        | Change port in `config.py`                   |
+| Missing Dependencies | Run `pip install -r requirements.txt`        |
+| Docker Issues        | Check Docker is running, port is open        |
+
+### Debug Mode
+
+```python
+# main.py
+import logging
 logging.basicConfig(level=logging.DEBUG)
-Support
-For issues and questions:
-Check the documentation
-Review the logs for error messages
-Ensure all API keys are valid and have sufficient credits
-Check network connectivity for external API calls
+```
+
+---
